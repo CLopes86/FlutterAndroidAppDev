@@ -1,0 +1,27 @@
+# FlutterAndroidAppDev
+
+Este repositório contém uma coleção de práticas de vários aplicativos Android desenvolvidos em Flutter.
+
+## Descrição
+
+Este repositório serve como um laboratório de aprendizado, onde você encontrará práticas de vários aplicativos Android desenvolvidos com o framework Flutter. Cada diretório representa um projeto diferente, explorando diferentes conceitos e funcionalidades do desenvolvimento de aplicativos móveis.
+
+## Conteúdo
+
+- **namer_app** é um aplicativo de exemplo criado como parte de um codelab da Flutter. Ele utiliza o pacote english_words para gerar palavras aleatórias e permite ao usuário marcá-las como favoritas.
+- **App2:** [Breve descrição do aplicativo 2.]
+- **App3:** [Breve descrição do aplicativo 3.]
+  - [Outros aplicativos...]
+
+## Estrutura do Projeto
+
+- Cada diretório (`App1`, `App2`, etc.) representa um projeto de aplicativo Android separado.
+- Dentro de cada diretório, você encontrará o código-fonte, recursos e qualquer outra documentação relevante.
+
+## Instruções de Execução
+
+Certifique-se de ter o Flutter instalado em sua máquina. Para executar um aplicativo específico, vá para o diretório correspondente e execute:
+
+```bash
+flutter pub get
+flutter run
