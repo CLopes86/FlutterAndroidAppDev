@@ -9,7 +9,28 @@ Este repositório serve como um laboratório de aprendizado, onde você encontra
 ## Conteúdo
 
 - **namer_app** é um aplicativo de exemplo criado como parte de um codelab da Flutter. Ele utiliza o pacote english_words para gerar palavras aleatórias e permite ao usuário marcá-las como favoritas.
-- **App2:** [Breve descrição do aplicativo 2.]
+
+- **aprendendo_básico:** Este aplicativo Flutter demonstra as funcionalidades básicas de navegação entre abas e interação com o usuário.
+
+Aba "Home":
+
+Apresenta um botão que altera seu texto entre "Click" e "Cliked" ao ser pressionado.
+Possui outro botão que navega para uma segunda página.
+Uma área interativa que alterna entre duas imagens ao ser tocada.
+Aba "Settings":
+
+Página simples com apenas uma barra de aplicativo.
+Funcionalidades:
+
+Navegação entre abas.
+Alteração de texto de um botão.
+Navegação para uma segunda página.
+Interação com o usuário através do toque em uma área da tela.
+Tecnologias:
+
+Flutter
+Widgets básicos do Flutter: MaterialApp, AppBar, Container, ElevatedButton, GestureDetector, Image e BottomNavigationBar.
+
 - **App3:** [Breve descrição do aplicativo 3.]
   - [Outros aplicativos...]
 
