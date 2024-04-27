@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 
-class TodosScreen extends StatelessWidget {
+import '../../../shared/models/lista_model.dart';
+import '../widgets/lista_checkbox_widget.dart';
+import '../widgets/lista_date_widget.dart';
+import '../widgets/lista_title_description.dart';
+
+final List<ListaModel> listas = [
+  ListaModel(title: 'Titulo 1', description: 'Descrição 1'),
+  ListaModel(title: 'Titulo 2', description: 'Descrição 2')
+];
+
+final class TodosScreen extends StatelessWidget {
   //Contrutor da classe
   const TodosScreen({super.key});
 
@@ -17,7 +27,22 @@ class TodosScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(), // Corpo da tela
+      body: ListView.builder(
+        itemCount: listas.length,
+        itemBuilder: (_, int index) {
+          final ListaModel lista = listas[index];
+          return Row(
+            children: [
+              ListaCheckboxWidget(lista),
+              const SizedBox(
+                width: 12,
+              ),
+              ListaTitleDescription(lista),
+              ListaDateWidget(lista),
+            ],
+          );
+        },
+      ), // Corpo da tela
     );
   }
 }
