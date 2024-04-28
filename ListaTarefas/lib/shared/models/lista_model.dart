@@ -17,4 +17,23 @@ class ListaModel {
             const Uuid().v4(), // Gera um UUID se nenhum id for fornecido.
         date = cDate ??
             DateTime.now(); // Usa a data atual se nenhuma data for fornecida.
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'date': date.microsecondsSinceEpoch,
+    };
+  }
+
+  factory ListaModel.fromMap(Map<String, dynamic> map) {
+    return ListaModel(
+      cId: map['id'],
+      title: map['title'],
+      description: map['description'],
+      cDate: DateTime.fromMicrosecondsSinceEpoch(
+        map['date'],
+      ),
+    );
+  }
 }
