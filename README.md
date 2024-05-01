@@ -8,7 +8,7 @@ Este repositório serve como um laboratório de aprendizado, onde você encontra
 
 ## Conteúdo
 
-- **namer_app** é um aplicativo de exemplo criado como parte de um codelab da Flutter. Ele utiliza o pacote english_words para gerar palavras aleatórias e permite ao usuário marcá-las como favoritas.
+- **Lista de Tarefas** Este é um aplicativo de Lista de Tarefas desenvolvido com Flutter, que permite aos usuários gerenciar suas tarefas diárias de forma eficiente. O aplicativo suporta a criação, edição e exclusão de tarefas, além de oferecer funcionalidades de persistência de dados com segurança.
 
 - **aprendendo_básico:** Este aplicativo Flutter demonstra as funcionalidades básicas de navegação entre abas e interação com o usuário.
 
