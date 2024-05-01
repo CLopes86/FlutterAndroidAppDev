@@ -6,6 +6,7 @@ void main() {
   runApp(const MyApp());
 }
 
+// MyApp é um widget sem estado que configura aspectos visuais e de localização da aplicação.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

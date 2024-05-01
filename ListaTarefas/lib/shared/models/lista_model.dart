@@ -1,22 +1,32 @@
-import 'package:uuid/uuid.dart'; // Importa o pacote UUID para gerar identificadores únicos.
+import 'package:uuid/uuid.dart';
 
+/// Classe que representa um modelo de item de lista.
+/// Cada item tem um identificador único, um título, uma descrição opcional, e uma data de criação ou modificação.
 class ListaModel {
-  final String id; // Identificador único da lista.
-  final String title; // Título da lista.
-  final String? description; // Descrição opcional da lista.
-  final DateTime date; // Data de criação ou modificação da lista.
+  /// Identificador único do item de lista. Um UUID v4 é gerado se nenhum ID é fornecido.
+  final String id;
 
-  // Construtor da ListaModel com parâmetros opcionais para id e data,
-  // e parâmetros obrigatórios para o título.
+  /// Título do item de lista. Este campo é obrigatório.
+  final String title;
+
+  /// Descrição opcional do item de lista.
+  final String? description;
+
+  /// Data de criação ou modificação do item de lista. A data atual é usada se nenhuma data é fornecida.
+  final DateTime date;
+
+  /// Construtor que inicializa um item de lista com [cId] e [cDate] opcionais, e [title] obrigatório.
+  /// Se nenhum [cId] é fornecido, um UUID v4 é gerado.
+  /// Se nenhum [cDate] é fornecido, a data atual é usada.
   ListaModel({
-    String? cId, // ID personalizado ou gerado automaticamente se não fornecido.
-    required this.title, // Título é obrigatório.
-    this.description, // Descrição é opcional.
-    DateTime? cDate, // Data personalizada ou atual se não fornecida.
-  })  : id = cId ??
-            const Uuid().v4(), // Gera um UUID se nenhum id for fornecido.
-        date = cDate ??
-            DateTime.now(); // Usa a data atual se nenhuma data for fornecida.
+    String? cId,
+    required this.title,
+    this.description,
+    DateTime? cDate,
+  })  : id = cId ?? Uuid().v4(),
+        date = cDate ?? DateTime.now();
+
+  /// Converte uma instância de [ListaModel] para um mapa, facilitando o armazenamento ou transferência.
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -26,14 +36,19 @@ class ListaModel {
     };
   }
 
+  /// Cria uma instância de [ListaModel] a partir de um mapa.
+  /// Útil para deserialização de dados armazenados ou recebidos em formatos de mapa.
   factory ListaModel.fromMap(Map<String, dynamic> map) {
+    if (!map.containsKey('id') ||
+        !map.containsKey('title') ||
+        !map.containsKey('date')) {
+      throw FormatException('Missing required fields for ListaModel');
+    }
     return ListaModel(
-      cId: map['id'],
-      title: map['title'],
-      description: map['description'],
-      cDate: DateTime.fromMicrosecondsSinceEpoch(
-        map['date'],
-      ),
+      cId: map['id'] as String,
+      title: map['title'] as String,
+      description: map['description'] as String?,
+      cDate: DateTime.fromMicrosecondsSinceEpoch(map['date'] as int),
     );
   }
 }
