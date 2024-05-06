@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto1/shared/exetensions/date_extension.dart';
 import 'package:projeto1/shared/models/lista_model.dart';
 import 'package:projeto1/shared/widgets/texts/text_widget.dart';
 
@@ -16,7 +17,7 @@ class ListaDateWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: TextWidget(
-        lista.date.toIso8601String(),
+        lista.date.formatDate,
       ),
     );
   }
