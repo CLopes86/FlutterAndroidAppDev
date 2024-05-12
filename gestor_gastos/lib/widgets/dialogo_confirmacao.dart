@@ -26,12 +26,12 @@ class DialogoConfirmacao extends StatelessWidget {
       content: Text(conteudo), //Define o conteudo textual do dialogo
       actions: <Widget>[
         TextButton(
-          child: Text('Não'), // Botão para cancelar a ação.
-          onPressed: onCancel, // Executa a função de cancelamento.
+          onPressed: onCancel,
+          child: const Text('Não'), // Executa a função de cancelamento.
         ),
         TextButton(
-          child: Text('Sim'), // Botão para confirmar a ação.
-          onPressed: onConfirm, // Executa a função de confirmação.
+          onPressed: onConfirm,
+          child: const Text('Sim'), // Executa a função de confirmação.
         ),
       ],
     );

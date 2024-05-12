@@ -33,7 +33,7 @@ class TransacaoItem extends StatelessWidget {
       elevation: 2,
 
       // Margens uniformes ao redor do card para espaçamento visual na lista.
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
 
       // ListTile é usado para uma exibição padrão de item de lista com título, subtítulo e ícones.
       child: ListTile(

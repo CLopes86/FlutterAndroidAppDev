@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestor_gastos/themes/app_tema.dart';
 
 import 'views/tela_principal.dart';
 
@@ -14,11 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Gestão de Gastos',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: TelaPrincipal(),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      home: const TelaPrincipal(),
     );
   }
 }
