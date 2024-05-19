@@ -1,5 +1,3 @@
-/// Classe que representa uma transação financeira no aplicativo.
-
 /// Esta classe é usada para armazenar dados relacionados a transações financeiras,
 /// como o ID da transação, título, quantia e data
 class Transacao {

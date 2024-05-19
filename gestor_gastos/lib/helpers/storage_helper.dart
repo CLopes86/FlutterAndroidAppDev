@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:gestor_gastos/exceptions/excecao_ErroAmarzenamento.dart';
-import 'package:gestor_gastos/validation/validacao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/transacao.dart';
 
@@ -10,51 +9,29 @@ class StorageHelper {
   static const String _transacaoKey = 'transacao';
 
   /// Salva uma lista de transações no SharedPreferences.
-  ///
-  /// Cada transação é convertida para uma representação JSON antes de ser armazenada.
-  /// Isso permite armazenar a lista de transações de forma estruturada e recuperável.
-  ///
   /// Parâmetros:
-  ///   - transacao: Lista de transações a serem salvas.
-  static Future<void> salvarTransacao(List<Transacao> transacoes) async {
-    Validacao.verificarListaVazia(transacoes, "transacoes");
+  ///   - transacoes: Lista de transações a serem salvas.
+  static Future<void> saveTransacao(List<Transacao> transacoes) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> jsonTransacao =
+        transacoes.map((transacao) => json.encode(transacao.toJson())).toList();
 
-      // Converte cada transação para um mapa e depois para uma string JSON.
-      List<String> jsonTransacao = transacoes
-          .map((transacao) => json.encode(transacao.toJson()))
-          .toList();
-
-      // Armazena a lista de strings JSON no SharedPreferences.
-      await prefs.setStringList(_transacaoKey, jsonTransacao);
-    } catch (e) {
-      throw ExcecaoErroArmazenamento(
-          'Falha ao salvar transações: ${e.toString()}');
-    }
+    await prefs.setStringList(_transacaoKey, jsonTransacao);
   }
 
   /// Carrega a lista de transações do SharedPreferences.
-  ///
-  /// Recupera a lista de strings JSON, convertendo cada uma delas de volta para objetos Transacao.
-  /// Se nenhuma transação estiver armazenada, retorna uma lista vazia.
-  ///
   /// Retorna:
   ///   - Uma lista de objetos Transacao recuperados do armazenamento.
-  static Future<List<Transacao>> carregarTransacao() async {
+  static Future<List<Transacao>> loadTransacao() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      // Obtém a lista de strings JSON do SharedPreferences.
       List<String>? jsonTransacao = prefs.getStringList(_transacaoKey);
 
-      // Se nada estiver armazenado, retorna uma lista vazia.
       if (jsonTransacao == null || jsonTransacao.isEmpty) {
         return [];
       }
 
-      // Converte cada string JSON de volta para um objeto Transacao.
       return jsonTransacao
           .map(
               (jsonTransacao) => Transacao.fromJson(json.decode(jsonTransacao)))
@@ -62,6 +39,71 @@ class StorageHelper {
     } catch (e) {
       throw ExcecaoErroArmazenamento(
           'Falha ao carregar transações: ${e.toString()}');
+    }
+  }
+
+  /// Obtém uma transação específica pelo ID.
+  /// Retorna:
+  ///   - A transação correspondente ao ID fornecido, ou nulo se não for encontrada.
+  static Future<Transacao?> getTransaction(String id) async {
+    try {
+      List<Transacao> transacoes = await loadTransacao();
+      // Procura pela transação com o ID fornecido.
+      Transacao? transacaoEncontrada;
+      try {
+        transacaoEncontrada =
+            transacoes.firstWhere((transacao) => transacao.id == id);
+      } catch (e) {
+        transacaoEncontrada = null;
+      }
+      return transacaoEncontrada;
+    } catch (e) {
+      throw ExcecaoErroArmazenamento(
+          'Falha ao obter transação: ${e.toString()}');
+    }
+  }
+
+  /// Exclui uma transação pelo ID.
+  ///
+  /// Parâmetros:
+  ///   - id: O ID da transação a ser excluída.
+  static Future<void> deleteTransacao(String id) async {
+    try {
+      List<Transacao> transacoes = await loadTransacao();
+
+      transacoes.removeWhere((transacao) => transacao.id == id);
+
+      await saveTransacao(transacoes);
+    } catch (e) {
+      throw ExcecaoErroArmazenamento(
+          'Falha ao excluir transação: ${e.toString()}');
+    }
+  }
+
+  /// Atualiza uma transação existente.
+  ///
+  /// Parâmetros:
+  ///   - updatedTransaction: A transação atualizada a ser salva.
+  static Future<void> updateTransacao(Transacao updatedTransacao) async {
+    try {
+      List<Transacao> transacoes = await loadTransacao();
+
+      // Encontra o índice da transação a ser atualizada.
+      int index = transacoes
+          .indexWhere((transacao) => transacao.id == updatedTransacao.id);
+
+      if (index != -1) {
+        // Atualiza a transação no índice encontrado.
+        transacoes[index] = updatedTransacao;
+
+        await saveTransacao(transacoes);
+      } else {
+        throw ExcecaoErroArmazenamento(
+            'Transação não encontrada para atualização');
+      }
+    } catch (e) {
+      throw ExcecaoErroArmazenamento(
+          'Falha ao atualizar transação: ${e.toString()}');
     }
   }
 }

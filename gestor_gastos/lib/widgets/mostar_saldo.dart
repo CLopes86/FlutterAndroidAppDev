@@ -1,36 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:gestor_gastos/controllers/transacao_controller.dart';
+import 'package:gestor_gastos/widgets/texto_stilo.dart';
+import 'package:intl/intl.dart';
 
-/// Widget que exibe o saldo total e disponível no aplicativo de gestão de gastos.
-///
-/// Este widget é responsável por apresentar as informações de saldo de forma
-/// clara e destacada, contribuindo para uma interface intuitiva e informativa.
 class MostrarSaldo extends StatelessWidget {
-  // Controlador que contém as informações de saldo
   final TransacaoController controller;
 
-  // Construtor que recebe o controlador como parâmetro
   const MostrarSaldo({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(
-          20), // Espaçamento interno para melhor visualização
-      color: Colors.blueGrey[50], // Cor de fundo suave para destacar a seção
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // Texto para o saldo total
-          Text(
-            'Saldo Total: ${controller.saldoTotal.toStringAsFixed(2)} € ',
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-              'Saldo Disponivel: ${controller.saldoDisponivel.toStringAsFixed(2)} €'),
-        ],
+    // Formatação de moeda
+    final NumberFormat currencyFormat =
+        NumberFormat.simpleCurrency(locale: 'pt_PT', name: 'EUR');
+
+    return Card(
+      margin: const EdgeInsets.all(16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.account_balance_wallet, color: Colors.blue),
+                const SizedBox(width: 8),
+                const TextoStyle(
+                  'Saldo Total:',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                const Spacer(),
+                TextoStyle(
+                  currencyFormat.format(controller.saldoTotal),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const Icon(Icons.money, color: Colors.green),
+                const SizedBox(width: 8),
+                const TextoStyle(
+                  'Saldo Disponível:',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                const Spacer(),
+                TextoStyle(
+                  currencyFormat.format(controller.saldoDisponivel),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
